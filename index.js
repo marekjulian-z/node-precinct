@@ -15,7 +15,7 @@ var detectiveTypeScript = require('detective-typescript');
 var fs = require('fs');
 var path = require('path');
 
-var natives = process.binding('natives');
+var natives = require("module").builtinModules;
 
 /**
  * Finds the list of dependencies for the given file
@@ -173,7 +173,7 @@ precinct.paperwork = function(filename, options) {
 
   if (!options.includeCore) {
     return deps.filter(function(d) {
-      return !natives[d];
+      return natives.indexOf(d) < 0;
     });
   }
 
